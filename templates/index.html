@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Assistant</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+            margin-bottom: -1px;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Research Assistant</h1>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'papers')">Paper Recommendations</div>
+            <div class="tab" onclick="openTab(event, 'pdf')">PDF Summary</div>
+            <div class="tab" onclick="openTab(event, 'trends')">Research Trends</div>
+            <div class="tab" onclick="openTab(event, 'ideas')">Generate Ideas</div>
+            <div class="tab" onclick="openTab(event, 'feasibility')">Evaluate Feasibility</div>
+        </div>
+        
+        <div id="papers" class="tab-content active">
+            <h2>Paper Recommendations</h2>
+            <form action="/recommend-papers" method="post">
+                <label for="query">Research Topic:</label>
+                <input type="text" id="query" name="query" required placeholder="e.g., quantum machine learning">
+                
+                <label for="year">Year (optional):</label>
+                <input type="number" id="year" name="year" placeholder="e.g., 2024">
+                
+                <label for="limit">Number of Papers:</label>
+                <input type="number" id="limit" name="limit" value="5" min="1" max="20">
+                
+                <button type="submit">Get Recommendations</button>
+            </form>
+        </div>
+        
+        <div id="pdf" class="tab-content">
+            <h2>PDF Summary</h2>
+            <form action="/summarize-pdf" method="post">
+                <label for="url">PDF URL:</label>
+                <input type="text" id="url" name="url" required placeholder="https://example.com/paper.pdf">
+                
+                <button type="submit">Summarize PDF</button>
+            </form>
+        </div>
+        
+        <div id="trends" class="tab-content">
+            <h2>Research Trends Analysis</h2>
+            <form action="/research-trends" method="post">
+                <label for="trends-query">Research Topic:</label>
+                <input type="text" id="trends-query" name="query" required placeholder="e.g., large language models">
+                
+                <label for="trends-year">Year:</label>
+                <input type="number" id="trends-year" name="year" value="2025">
+                
+                <label for="trends-limit">Number of Papers to Analyze:</label>
+                <input type="number" id="trends-limit" name="limit" value="10" min="1" max="20">
+                
+                <button type="submit">Analyze Trends</button>
+            </form>
+        </div>
+        
+        <div id="ideas" class="tab-content">
+            <h2>Generate Research Ideas</h2>
+            <form action="/generate-idea" method="post">
+                <label for="idea-query">Research Area:</label>
+                <input type="text" id="idea-query" name="query" required placeholder="e.g., AI in drug discovery">
+                
+                <label for="idea-year">Year:</label>
+                <input type="number" id="idea-year" name="year" value="2025">
+                
+                <label for="idea-limit">Number of Papers to Analyze:</label>
+                <input type="number" id="idea-limit" name="limit" value="5" min="1" max="10">
+                
+                <button type="submit">Generate Ideas</button>
+            </form>
+        </div>
+        
+        <div id="feasibility" class="tab-content">
+            <h2>Evaluate Research Idea Feasibility</h2>
+            <form action="/evaluate-feasibility" method="post">
+                <label for="research-idea">Research Idea:</label>
+                <textarea id="research-idea" name="research_idea" required placeholder="Paste your research idea here for evaluation..."></textarea>
+                
+                <button type="submit">Evaluate Feasibility</button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>Research Assistant - Powered by FastAPI and OpenAI</p>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content and mark the button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
